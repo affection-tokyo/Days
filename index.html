@@ -126,9 +126,8 @@
             align-items: center;
         }
 
-        /* ロゴ画像のスタイル */
         .header-logo {
-            height: 28px; /* ロゴの大きさに合わせて調整 */
+            height: 28px;
             width: auto;
             object-fit: contain;
             transition: height 0.3s ease;
@@ -174,7 +173,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* 画像のディテールを見せつつ文字を読みやすくする、温かみのあるオーバーレイ */
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(245, 238, 230, 0.4));
             z-index: 1;
         }
@@ -185,7 +183,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* 生成画像のような、俯瞰（フラットレイ）の裁縫道具・生地の画像に変更 */
             background-image: url('top.jpg');
             background-size: cover;
             background-position: center;
@@ -210,7 +207,6 @@
             line-height: 2.2;
             letter-spacing: 0.1em;
             margin-bottom: 0;
-            /* 背景画像に負けないよう、白のぼかしシャドウを少し強めに追加 */
             text-shadow: 0 1px 4px rgba(255,255,255,0.8), 0 0 10px rgba(255,255,255,0.4);
         }
 
@@ -412,6 +408,11 @@
             border-color: var(--color-text-main);
         }
 
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         /* -------------------------
            Footer
         ------------------------- */
@@ -440,74 +441,22 @@
            Responsive
         ------------------------- */
         @media (max-width: 768px) {
-            .hero {
-                height: 80vh;
-            }
-            .hero h2 {
-                font-size: 1.3rem;
-                line-height: 2;
-                padding: 0 10px;
-            }
-            
-            .header-logo {
-                height: 22px;
-            }
-
-            .section {
-                padding: 100px 5%;
-            }
-
-            .section-title {
-                font-size: 2rem;
-                margin-bottom: 60px;
-            }
-
+            .hero { height: 80vh; }
+            .hero h2 { font-size: 1.3rem; line-height: 2; padding: 0 10px; }
+            .header-logo { height: 22px; }
+            .section { padding: 100px 5%; }
+            .section-title { font-size: 2rem; margin-bottom: 60px; }
             .service-block, 
-            .service-block:nth-child(even) {
-                flex-direction: column;
-                gap: 40px;
-                margin-bottom: 100px;
-            }
-
-            .service-img-wrap {
-                width: 100%;
-                aspect-ratio: 3 / 2;
-            }
-            
-            .service-text {
-                padding: 0 10px;
-            }
-
+            .service-block:nth-child(even) { flex-direction: column; gap: 40px; margin-bottom: 100px; }
+            .service-img-wrap { width: 100%; aspect-ratio: 3 / 2; }
+            .service-text { padding: 0 10px; }
             .company-table th, 
-            .company-table td {
-                display: block;
-                width: 100%;
-                padding: 12px 0;
-                border-bottom: none;
-            }
-
-            .company-table tr:first-child th {
-                border-top: none;
-            }
-
-            .company-table th {
-                padding-bottom: 5px;
-                font-size: 0.9rem;
-            }
-            
-            .company-table td {
-                padding-top: 0;
-                margin-bottom: 20px;
-                border-bottom: 1px solid var(--color-border);
-            }
-            
-            .company-table tr:last-child td {
-                border-bottom: none;
-            }
-
-            nav {
-                display: none;
-            }
+            .company-table td { display: block; width: 100%; padding: 12px 0; border-bottom: none; }
+            .company-table tr:first-child th { border-top: none; }
+            .company-table th { padding-bottom: 5px; font-size: 0.9rem; }
+            .company-table td { padding-top: 0; margin-bottom: 20px; border-bottom: 1px solid var(--color-border); }
+            .company-table tr:last-child td { border-bottom: none; }
+            nav { display: none; }
         }
     </style>
 </head>
@@ -516,7 +465,6 @@
     <!-- ヘッダー -->
     <header id="header">
         <h1>
-            <!-- いただいたロゴ画像 -->
             <img src="days.jpg" alt="Days Co., Ltd." class="header-logo">
         </h1>
         <nav>
@@ -540,12 +488,9 @@
     <!-- サービス内容 -->
     <section id="services" class="section">
         <h2 class="section-title fade-up">Services</h2>
-        
         <div class="services-container">
-            <!-- OEM ブロック -->
             <div class="service-block">
                 <div class="service-img-wrap reveal-img">
-                    <!-- OEM画像：ミシンと生地 -->
                     <img src="oem.png" alt="OEM Production">
                 </div>
                 <div class="service-text fade-up delay-1">
@@ -555,10 +500,8 @@
                 </div>
             </div>
 
-            <!-- ODM ブロック -->
             <div class="service-block">
                 <div class="service-img-wrap reveal-img">
-                    <!-- ODM画像：デジタル感を消し、手作業のパターンのアナログな画像に変更 -->
                     <img src="odm.png" alt="ODM Planning">
                 </div>
                 <div class="service-text fade-up delay-1">
@@ -574,7 +517,6 @@
     <div class="company-wrapper">
         <section id="company" class="section" style="padding: 0;">
             <h2 class="section-title fade-up">Company</h2>
-            <!-- 画像とレイアウトを削除し、シンプルな表組みに戻しました -->
             <table class="company-table fade-up delay-1">
                 <tr>
                     <th>会社名</th>
@@ -601,7 +543,8 @@
         <div class="contact-wrap">
             <p class="contact-intro fade-up delay-1">服作りに関するご相談や、お見積もりのご依頼など<br>お気軽にお問い合わせください。</p>
             
-            <form action="#" method="POST" onsubmit="event.preventDefault(); alert('※これはプレビュー用のダミーフォームです。実際には送信されません。');" class="fade-up delay-2">
+            <!-- 変更点：id="contactForm" を付与し、onsubmit を削除 -->
+            <form id="contactForm" class="fade-up delay-2">
                 <div class="form-group">
                     <label for="name">Name / Company</label>
                     <input type="text" id="name" name="name" required placeholder="お名前 / 貴社名">
@@ -614,14 +557,13 @@
                     <label for="message">Message</label>
                     <textarea id="message" name="message" required placeholder="ご相談内容やご質問をご記入ください。"></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Send Message</button>
+                <button type="submit" id="submitBtn" class="submit-btn">Send Message</button>
             </form>
         </div>
     </section>
 
     <!-- フッター -->
     <footer>
-        <!-- フッターにもロゴを配置 -->
         <img src="days.jpg" alt="Days Co., Ltd." class="footer-logo">
         <p class="footer-copyright">&copy; DAYS Co., Ltd. All Rights Reserved.</p>
     </footer>
@@ -677,6 +619,36 @@
 
         const revealElements = document.querySelectorAll('.reveal-img');
         revealElements.forEach(el => observer.observe(el));
+
+
+        // 4. GASへの問い合わせ送信処理（★新規追加）
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzFj8AtuJKo5u8f3at5CemGUdp6-1RD-b7n9FCjeIm4bmPXmuFiBCt3z5m8j4sRmQgwfA/exec"; // ★デプロイしたGASの「ウェブアプリURL」に差し替えてください
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'SENDING...';
+
+            fetch(GAS_URL, {
+                method: 'POST',
+                body: new FormData(this)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('お問い合わせを受け付けました。ご連絡ありがとうございます。');
+                document.getElementById('contactForm').reset();
+            })
+            .catch(error => {
+                alert('送信に失敗しました。お手数ですが時間をおいて再度お試しください。');
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.textContent = 'SEND MESSAGE';
+            });
+        });
     </script>
 </body>
 </html>
