@@ -152,44 +152,117 @@
         }
 
         /* -------------------------
-        Hero Section（黒背景×白文字）
+        Hero Section（完成版）
         ------------------------- */
         .hero {
-            height: 70vh;
-            min-height: 450px;
+            height: 85vh;
+            min-height: 560px;
+            position: relative;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background-color: #121212; /* 深みのあるモダンな黒 */
-            padding: 120px 5% 80px;
+            align-items: center; /* 垂直中央に配置 */
+            background-color: #f7f3ed; /* 温かみのある生成り色 */
+            color: #8c2323; /* 深みのあるエンジ色 */
+            padding: 80px 6%;
             box-sizing: border-box;
+            overflow: hidden;
         }
 
-        .hero-content {
-            max-width: 800px;
+        .hero-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
         }
 
-        .hero h2 {
+        /* 左側：テキストブロック */
+        .hero-left {
+            flex: 1.2;
+        }
+
+        /* 英語タイトル（サイズ抑えめ・上品な字間） */
+        .hero-title-en {
+            font-family: var(--font-en);
+            font-size: clamp(1.6rem, 2.8vw, 2.8rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin: 0 0 24px 0;
+            color: #8c2323;
+            letter-spacing: 0.05em;
+        }
+
+        /* 日本語サブテキスト */
+        .hero-title-jp {
             font-family: var(--font-serif);
-            font-size: 1.6rem;
-            font-weight: 300; /* 繊細で綺麗なラインを意識 */
-            line-height: 2.4;
-            letter-spacing: 0.14em; /* 余白を広げて上品に */
-            color: #ffffff; /* 白文字 */
+            font-size: clamp(0.85rem, 1vw, 1rem);
+            font-weight: 400;
+            line-height: 2.0;
+            letter-spacing: 0.12em;
             margin: 0;
+            color: #8c2323;
+            opacity: 0.9;
         }
 
-        /* スマホ対応 */
+        /* 右側：生地ビジュアルエリア */
+        .hero-right {
+            flex: 0.8;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .hero-image-wrapper {
+            width: 100%;
+            max-width: 360px;
+            aspect-ratio: 3 / 4; /* 縦長比率 */
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .hero-fabric-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* スマホ表示対応（768px以下） */
         @media (max-width: 768px) {
             .hero {
                 height: auto;
-                padding: 140px 5% 80px;
+                min-height: auto;
+                padding: 100px 5% 60px;
             }
-            .hero h2 {
-                font-size: 1.2rem;
-                line-height: 2.1;
+
+            .hero-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 40px;
+            }
+
+            .hero-left {
+                width: 100%;
+            }
+
+            .hero-right {
+                width: 100%;
+            }
+
+            .hero-image-wrapper {
+                max-width: 100%;
+                aspect-ratio: 4 / 3; /* スマホでは横長配置に切り替え */
+            }
+
+            .hero-title-en {
+                font-size: 2.0rem;
+                line-height: 1.2;
+                margin-bottom: 20px;
+            }
+
+            .hero-title-jp {
+                font-size: 0.9rem;
+                line-height: 1.9;
             }
         }
 
@@ -459,11 +532,25 @@
 
     <!-- ファーストビュー（ヒーローセクション） -->
     <section class="hero">
-        <div class="hero-content">
-            <h2 class="fade-up is-active">
-                「作りたい」を叶える、丁寧なモノづくり。<br>
-                アパレルOEM・ODMのパートナー。
-            </h2>
+        <div class="hero-container">
+            <!-- 左側：メッセージエリア（英語＋日本語） -->
+            <div class="hero-left">
+                <h2 class="hero-title-en">
+                    MAKE GOOD DAYS,<br>
+                    MAKE GOOD CLOTHES.
+                </h2>
+                <p class="hero-title-jp">
+                    「作りたい」を叶える、丁寧なモノづくり。<br>
+                    アパレルOEM・ODMのパートナー。
+                </p>
+            </div>
+            
+            <!-- 右側：生地イメージ写真エリア -->
+            <div class="hero-right">
+                <div class="hero-image-wrapper">
+                    <img src="fabric.jpg" alt="トルソー" class="hero-fabric-img">
+                </div>
+            </div>
         </div>
     </section>
 
