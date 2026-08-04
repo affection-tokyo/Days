@@ -166,6 +166,7 @@
             background-color: #fcfaf7;
         }
 
+        /* ★追加: 画像と文字の間のスモーク層 */
         .hero::after {
             content: '';
             position: absolute;
@@ -173,29 +174,31 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(245, 238, 230, 0.4));
+            /* 【明るい白スモーク】サイトの柔らかい雰囲気を保つ場合 */
+            background: rgba(255, 255, 255, 0.45);
             z-index: 1;
+            pointer-events: none;
         }
 
-        .hero-bg {
+        .hero-img-wrap {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('top.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.9;
             z-index: 0;
-            transform: scale(1.05);
-            mix-blend-mode: multiply;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .hero-content {
             position: relative;
-            z-index: 2;
-            color: #4a4a4a;
+            z-index: 2; /* スモーク層より上に表示 */
+            color: #333333;
             padding: 0 5%;
             max-width: 800px;
         }
@@ -476,7 +479,10 @@
 
     <!-- ファーストビュー（ヒーローセクション） -->
     <section class="hero">
-        <div class="hero-bg"></div>
+        <div class="hero-img-wrap">
+            <!-- 指定フォルダ（例: imagesフォルダ）に合わせて src を書き換えてください -->
+            <img src="top.jpg" alt="メインビジュアル" class="hero-img">
+        </div>
         <div class="hero-content">
             <h2 class="fade-up is-active">
                 「作りたい」を叶える、丁寧なモノづくり。<br>
