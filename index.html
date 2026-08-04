@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社デイズ | アパレルOEM・ODM</title>
+    <!-- フォントの読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* -------------------------
+           Base Styles & Variables
+        ------------------------- */
+        :root {
+            --color-text-main: #333333;
+            --color-text-light: #777777;
+            --color-bg-base: #ffffff;
+            --color-bg-sub: #faf9f7;
+            --color-border: #e8e4df;
+            --color-accent-warm: #d4c4b7;
+            --font-sans: 'Noto Sans JP', sans-serif;
+            --font-serif: 'Noto Serif JP', serif;
+            --font-en: 'Cormorant Garamond', serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 0;
+            color: var(--color-text-main);
+            background-color: var(--color-bg-base);
+            line-height: 1.8;
+            letter-spacing: 0.08em;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+
+        a:hover {
+            opacity: 0.6;
+        }
+
+        /* -------------------------
+           Animation Classes
+        ------------------------- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        
+        .fade-up.is-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+
+        .reveal-img {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .reveal-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-bg-base);
+            transform-origin: right;
+            transition: transform 1.2s cubic-bezier(0.86, 0, 0.07, 1);
+            z-index: 2;
+        }
+
+        .reveal-img.is-active::after {
+            transform: scaleX(0);
+        }
+
+        .reveal-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            transition: transform 1.5s ease-out;
+        }
+
+        .reveal-img.is-active img {
+            transform: scale(1);
+        }
+
+        /* -------------------------
+           Header
+        ------------------------- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #ffffff;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            box-sizing: border-box;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 12px 5%;
+            background-color: #ffffff;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+        }
+
+        header h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        /* ロゴ画像のスタイル */
+        .header-logo {
+            height: 28px; /* ロゴの大きさに合わせて調整 */
+            width: auto;
+            object-fit: contain;
+            transition: height 0.3s ease;
+        }
+
+        header.scrolled .header-logo {
+            height: 24px;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            font-size: 0.85rem;
+            font-family: var(--font-en);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-text-main);
+        }
+
+        /* -------------------------
+           Hero Section
+        ------------------------- */
+        .hero {
+            height: 90vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            background-color: #fcfaf7;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 画像のディテールを見せつつ文字を読みやすくする、温かみのあるオーバーレイ */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(245, 238, 230, 0.4));
+            z-index: 1;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 生成画像のような、俯瞰（フラットレイ）の裁縫道具・生地の画像に変更 */
+            background-image: url('top.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.9;
+            z-index: 0;
+            transform: scale(1.05);
+            mix-blend-mode: multiply;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: #4a4a4a;
+            padding: 0 5%;
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 2.2;
+            letter-spacing: 0.1em;
+            margin-bottom: 0;
+            /* 背景画像に負けないよう、白のぼかしシャドウを少し強めに追加 */
+            text-shadow: 0 1px 4px rgba(255,255,255,0.8), 0 0 10px rgba(255,255,255,0.4);
+        }
+
+        /* -------------------------
+           Section Common
+        ------------------------- */
+        .section {
+            padding: 140px 5%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--font-en);
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            margin-bottom: 90px;
+            text-align: center;
+            color: var(--color-text-main);
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 1px;
+            background-color: var(--color-accent-warm);
+        }
+
+        /* -------------------------
+           Services
+        ------------------------- */
+        .service-block {
+            display: flex;
+            align-items: center;
+            gap: 8%;
+            margin-bottom: 140px;
+        }
+
+        .service-block:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .service-img-wrap {
+            flex: 1.2;
+            aspect-ratio: 4 / 5;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .service-text {
+            flex: 1;
+        }
+
+        .service-text h3 {
+            font-family: var(--font-en);
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            margin-bottom: 20px;
+            color: var(--color-text-main);
+        }
+
+        .service-text .sub-title {
+            display: block;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--color-text-light);
+            font-weight: 400;
+        }
+
+        .service-text p {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            text-align: justify;
+            line-height: 2.2;
+        }
+
+        /* -------------------------
+           Company
+        ------------------------- */
+        .company-wrapper {
+            background-color: var(--color-bg-sub);
+            padding: 120px 5%;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .company-table {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        .company-table th, 
+        .company-table td {
+            padding: 25px 15px;
+            border-bottom: 1px solid var(--color-border);
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .company-table th {
+            width: 35%;
+            font-family: var(--font-serif);
+            font-weight: 400;
+            color: var(--color-text-light);
+        }
+
+        .company-table tr:first-child th,
+        .company-table tr:first-child td {
+            border-top: 1px solid var(--color-border);
+        }
+
+        /* -------------------------
+           Contact
+        ------------------------- */
+        .contact-wrap {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .contact-intro {
+            text-align: center;
+            margin-bottom: 70px;
+            font-family: var(--font-serif);
+            color: var(--color-text-light);
+            font-size: 1rem;
+            line-height: 2;
+        }
+
+        .form-group {
+            margin-bottom: 45px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 0.8rem;
+            font-family: var(--font-en);
+            color: var(--color-text-light);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 1px solid var(--color-border);
+            background-color: transparent;
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s, background-color 0.3s;
+            border-radius: 0;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-bottom-color: var(--color-accent-warm);
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            max-width: 280px;
+            margin: 70px auto 0;
+            padding: 18px;
+            background-color: var(--color-text-main);
+            color: #ffffff;
+            border: 1px solid var(--color-text-main);
+            font-family: var(--font-en);
+            font-size: 0.9rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: transparent;
+            color: var(--color-text-main);
+            border-color: var(--color-text-main);
+        }
+
+        /* -------------------------
+           Footer
+        ------------------------- */
+        footer {
+            text-align: center;
+            padding: 80px 20px 40px;
+            background-color: var(--color-bg-base);
+        }
+
+        .footer-logo {
+            height: 35px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .footer-copyright {
+            font-family: var(--font-en);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--color-text-light);
+        }
+
+        /* -------------------------
+           Responsive
+        ------------------------- */
+        @media (max-width: 768px) {
+            .hero {
+                height: 80vh;
+            }
+            .hero h2 {
+                font-size: 1.3rem;
+                line-height: 2;
+                padding: 0 10px;
+            }
+            
+            .header-logo {
+                height: 22px;
+            }
+
+            .section {
+                padding: 100px 5%;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 60px;
+            }
+
+            .service-block, 
+            .service-block:nth-child(even) {
+                flex-direction: column;
+                gap: 40px;
+                margin-bottom: 100px;
+            }
+
+            .service-img-wrap {
+                width: 100%;
+                aspect-ratio: 3 / 2;
+            }
+            
+            .service-text {
+                padding: 0 10px;
+            }
+
+            .company-table th, 
+            .company-table td {
+                display: block;
+                width: 100%;
+                padding: 12px 0;
+                border-bottom: none;
+            }
+
+            .company-table tr:first-child th {
+                border-top: none;
+            }
+
+            .company-table th {
+                padding-bottom: 5px;
+                font-size: 0.9rem;
+            }
+            
+            .company-table td {
+                padding-top: 0;
+                margin-bottom: 20px;
+                border-bottom: 1px solid var(--color-border);
+            }
+            
+            .company-table tr:last-child td {
+                border-bottom: none;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header id="header">
+        <h1>
+            <!-- いただいたロゴ画像 -->
+            <img src="days.jpg" alt="Days Co., Ltd." class="header-logo">
+        </h1>
+        <nav>
+            <a href="#services">Services</a>
+            <a href="#company">Company</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- ファーストビュー（ヒーローセクション） -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h2 class="fade-up is-active">
+                「作りたい」を叶える、丁寧なモノづくり。<br>
+                アパレルOEM・ODMのパートナー。
+            </h2>
+        </div>
+    </section>
+
+    <!-- サービス内容 -->
+    <section id="services" class="section">
+        <h2 class="section-title fade-up">Services</h2>
+        
+        <div class="services-container">
+            <!-- OEM ブロック -->
+            <div class="service-block">
+                <div class="service-img-wrap reveal-img">
+                    <!-- OEM画像：ミシンと生地 -->
+                    <img src="oem.png" alt="OEM Production">
+                </div>
+                <div class="service-text fade-up delay-1">
+                    <h3>OEM</h3>
+                    <span class="sub-title">確かな品質で、デザインを形に。</span>
+                    <p>お客様の思い描くデザインや仕様を、正確に形にします。当社独自の生産背景を活かし、緻密なパターンメイキングから縫製まで、細かなご要望やロットのご相談にも柔軟に対応。ブランドのこだわりを損なうことなく、高品質な製品をお届けします。</p>
+                </div>
+            </div>
+
+            <!-- ODM ブロック -->
+            <div class="service-block">
+                <div class="service-img-wrap reveal-img">
+                    <!-- ODM画像：デジタル感を消し、手作業のパターンのアナログな画像に変更 -->
+                    <img src="odm.png" alt="ODM Planning">
+                </div>
+                <div class="service-text fade-up delay-1">
+                    <h3>ODM</h3>
+                    <span class="sub-title">コンセプトから、共に創り上げる。</span>
+                    <p>ふんわりとしたアイデアやコンセプトの段階からでも、お気軽にご相談ください。デザイン画の作成、トレンドを踏まえた素材やカラーの提案、トワルチェックから最終的な本生産まで。ブランドの描く世界観を具現化するため、トータルでディレクション・進行いたします。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 会社概要 -->
+    <div class="company-wrapper">
+        <section id="company" class="section" style="padding: 0;">
+            <h2 class="section-title fade-up">Company</h2>
+            <!-- 画像とレイアウトを削除し、シンプルな表組みに戻しました -->
+            <table class="company-table fade-up delay-1">
+                <tr>
+                    <th>会社名</th>
+                    <td>株式会社デイズ</td>
+                </tr>
+                <tr>
+                    <th>事業内容</th>
+                    <td>アパレル製品のOEM・ODM生産 / 企画・デザイン</td>
+                </tr>
+                <tr>
+                    <th>所在地</th>
+                    <td>
+                        〒151-0051<br>
+                        東京都渋谷区千駄ヶ谷1-9-6 K&Kビル2F
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+
+    <!-- お問い合わせ -->
+    <section id="contact" class="section">
+        <h2 class="section-title fade-up">Contact</h2>
+        <div class="contact-wrap">
+            <p class="contact-intro fade-up delay-1">服作りに関するご相談や、お見積もりのご依頼など<br>お気軽にお問い合わせください。</p>
+            
+            <form action="#" method="POST" onsubmit="event.preventDefault(); alert('※これはプレビュー用のダミーフォームです。実際には送信されません。');" class="fade-up delay-2">
+                <div class="form-group">
+                    <label for="name">Name / Company</label>
+                    <input type="text" id="name" name="name" required placeholder="お名前 / 貴社名">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="mail@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="ご相談内容やご質問をご記入ください。"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+        <!-- フッターにもロゴを配置 -->
+        <img src="days.jpg" alt="Days Co., Ltd." class="footer-logo">
+        <p class="footer-copyright">&copy; DAYS Co., Ltd. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // 1. スムーススクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 2. ヘッダーのスクロール時のスタイル変更
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 3. スクロール連動アニメーション
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const fadeUpElements = document.querySelectorAll('.fade-up:not(.is-active)');
+        fadeUpElements.forEach(el => observer.observe(el));
+
+        const revealElements = document.querySelectorAll('.reveal-img');
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="ja"><!-- InstanceBegin template="/Templates/tmp.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no">
+<!-- InstanceBeginEditable name="doctitle" -->
+	<title>CONTACT | Days Co.,Ltd.</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+<!-- InstanceEndEditable -->
+<link type="text/css" href="css/impstyle.css?0728" rel="stylesheet">
+<link type="text/css" href="css/tablet.css?0728" rel="stylesheet">
+<link type="text/css" href="css/smart.css?0728" rel="stylesheet">
+<link type="text/css" href="css/pc.css" rel="stylesheet">
+<script src="js/respond.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/menu.js"></script>
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+<!-- InstanceParam name="id" type="text" value="page-sub" -->
+</head>
+<body id="page-sub">
+<div id="wrap">
+	<header id="header" class="box_flex_sp vcen">
+<!-- InstanceBeginEditable name="description" -->
+		<h1 class="title"><a href="https://www.days-co-ltd.net/"><img src="img/title.png" alt="株式会社デイズへのお問い合わせ"></a></h1>
+<!-- InstanceEndEditable -->
+		<nav id="menu">
+			<ul>
+				<li><a href="https://www.days-co-ltd.net/">TOP</a></li>
+				<li><a href="concept.html">CONCEPT</a></li>
+				<li><a href="brand.html">BRAND</a></li>
+				<li><a href="contact.html">CONTACT</a></li>
+			</ul>
+			<p><a href="https://www.instagram.com/scarpetta_denim/" target="_blank"><img src="img/bana_brand.png" alt="BRAND"></a></p>
+		</nav>
+	</header>
+	<section id="container">
+<!-- InstanceBeginEditable name="main" -->
+		<div id="contact" class="main">
+			<h2><span>Contact</span>お問い合せ</h2>
+			<p>お問合せは、お電話（<a href="tel:03-6440-9021">03-6440-9021</a>）にてお問合せいただくか、下記の入力画面に必要事項をご記入いただき、入力画面の最後にある「送信する」ボタンよりお問合せください。</p>
+			<form id="mailform" method="post" action="mailform/send.cgi" onsubmit="return sendmail(this);">
+				<table class="tbl">
+					<tr>
+						<th><span class="need">必須</span>お名前</th>
+						<td><input type="text" name="お名前(必須)" size="30" class="active"></td>
+					</tr>
+					<tr>
+						<th><span class="need">必須</span>フリガナ</th>
+						<td><input type="text" name="フリガナ(必須)" size="30" class="active"></td>
+					</tr>
+					<tr>
+						<th>郵便番号</th>
+						<td><input type="text" name="郵便番号" size="10" class="disabled wno">&nbsp;
+						<input type="button" value="〒から住所を自動入力" onclick="mfpc('mailform','郵便番号','住所(必須)');"></td>
+					</tr>
+					<tr>
+						<th><span class="need">必須</span>住所</th>
+						<td><input type="text" name="住所(必須)" size="70" class="active"></td>
+					</tr>
+					<tr>
+						<th>電話番号</th>
+						<td><input type="text" name="電話番号" size="50" maxlength="50" class="disabled"></td>
+					</tr>
+					<tr>
+						<th><span class="need">必須</span>メールアドレス</th>
+						<td><input type="text" name="email(必須)" size="50" maxlength="50" class="disabled"></td>
+					</tr>
+					<tr>
+						<th><span class="need">必須</span>お問合せ内容</th>
+						<td><textarea name="お問合せ内容(必須)" rows="10" cols="70" class="active"></textarea></td>
+					</tr>
+				</table>
+				<div class="btn">
+					<p>お客様の個人情報の漏洩を防ぐため、このページの情報は暗号化され、SSLモードで送信されます。<br>
+					必要事項が記入できましたら「送信する」ボタンを押してください。</p>
+					<p class="cen"><input type="submit" value="送信する"> <input type="reset" name="reset" value="リセット"></p>
+				</div>
+			</form>
+			<script type="text/javascript" src="mailform/mailform.js" charset="utf-8"></script>
+			<script type="text/javascript" src="mailform/postcodes/get.cgi?js" charset="utf-8"></script>
+		</div>
+<!-- InstanceEndEditable -->
+		<div id="container-img"><img class="dsp_hp" src="img/main.jpg?0728" alt=""><img class="dsp_tbs" src="img/main_sp.jpg?0728" alt=""></div>
+	</section>
+</div>
+<footer id="footer">
+	<ul>
+		<li><a href="https://www.days-co-ltd.net/">TOP</a></li>
+		<li><a href="concept.html">CONCEPT</a></li>
+		<li><a href="brand.html">BRAND</a></li>
+		<li><a href="contact.html">CONTACT</a></li>
+	</ul>
+	<p id="copyright">Copyright &copy; 2025 Days Co.,Ltd. All Rights Reserved.</p>
+</footer>
+</body>
+<!-- InstanceEnd --></html>

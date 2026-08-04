@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="format-detection" content="telephone=no">
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>Days Co.,Ltd.</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<!-- TemplateEndEditable -->
+<link type="text/css" href="../css/impstyle.css?0728" rel="stylesheet">
+<link type="text/css" href="../css/tablet.css?0728" rel="stylesheet">
+<link type="text/css" href="../css/smart.css?0728" rel="stylesheet">
+<link type="text/css" href="../css/pc.css" rel="stylesheet">
+<script src="../js/respond.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/menu.js"></script>
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<!-- TemplateParam name="id" type="text" value="page-sub" -->
+</head>
+<body id="@@(id)@@">
+<div id="wrap">
+	<header id="header" class="box_flex_sp vcen">
+<!-- TemplateBeginEditable name="description" -->
+		<h1 class="title"><a href="https://www.days-co-ltd.net/"><img src="../img/title.png" alt="Days Co.,Ltd."></a></h1>
+<!-- TemplateEndEditable -->
+		<nav id="menu">
+			<ul>
+				<li><a href="https://www.days-co-ltd.net/">TOP</a></li>
+				<li><a href="../concept.html">CONCEPT</a></li>
+				<li><a href="../brand.html">BRAND</a></li>
+				<li><a href="../contact.html">CONTACT</a></li>
+			</ul>
+			<p><a href="https://www.instagram.com/scarpetta_denim/" target="_blank"><img src="../img/bana_brand.png" alt="BRAND"></a></p>
+		</nav>
+	</header>
+	<section id="container">
+<!-- TemplateBeginEditable name="main" -->
+		<div class="main">
+			<ul id="page_navi">
+				<li><a href="https://www.days-co-ltd.net/">ホーム</a></li><li>サブページ</li>
+			</ul>
+		</div>
+<!-- TemplateEndEditable -->
+		<div id="container-img"><img class="dsp_hp" src="../img/main.jpg?0728" alt=""><img class="dsp_tbs" src="../img/main_sp.jpg?0728" alt=""></div>
+	</section>
+</div>
+<footer id="footer">
+	<ul>
+		<li><a href="https://www.days-co-ltd.net/">TOP</a></li>
+		<li><a href="../concept.html">CONCEPT</a></li>
+		<li><a href="../brand.html">BRAND</a></li>
+		<li><a href="../contact.html">CONTACT</a></li>
+	</ul>
+	<p id="copyright">Copyright &copy; 2025 Days Co.,Ltd. All Rights Reserved.</p>
+</footer>
+</body>
+</html>
