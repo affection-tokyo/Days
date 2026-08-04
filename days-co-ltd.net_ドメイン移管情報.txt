@@ -1,0 +1,9 @@
+﻿ドメイン名	days-co-ltd.net
+オースコード	5mFmWtrgdd1!
+
+※申請元のサービスによってオースコードの呼称が異なります。
+例：
+Auth Code
+Authorization Code
+移管認証コード
+ドメイン移管コード

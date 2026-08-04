@@ -1,0 +1,158 @@
+@charset "utf-8";
+/*==================================================
+	各ページ固有のスタイルを記述
+==================================================*/
+/* 枠のマージン・パディング */
+.mb { margin-bottom: 80px; }
+.pt { padding-top: 80px; }
+.pb { padding-bottom: 80px; }
+/*--------------------------------------------------
+	会社概要
+--------------------------------------------------*/
+#concept table {
+	margin-bottom: 20px;
+}
+#concept table th,
+#concept table td {
+	padding-bottom: 25px;
+	vertical-align: top;
+}
+#concept table th {
+	padding-right: 1em;
+	white-space: nowrap;
+}
+#concept .map iframe {
+	width: 100%;
+	height: 300px;
+	vertical-align: bottom;
+}
+/*--------------------------------------------------
+	BRAND
+--------------------------------------------------*/
+#brand .logo {
+	/*position: relative;*/
+	margin-bottom: 50px;
+}
+/*
+#brand .logo:after {
+	content: "";
+	width: 1px;
+	height: 15px;
+	background: #000;
+	display: inline-block;
+	position: absolute;
+	bottom: 35px;
+	left: 50%;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+}
+*/
+#brand h2 {
+	margin-bottom: 15px;
+}
+#brand .txt01 {
+	margin-bottom: 40px;
+}
+#brand .txt02 {
+	line-height: 3;
+	margin-bottom: 50px;
+}
+#brand .links {
+	display: flex;
+	justify-content: space-between;
+	width: 450px;
+	margin: 0 auto;
+}
+#brand .links li {
+	width: 205px;
+}
+@media only screen and (max-width: 1300px){
+	#brand .links {
+		width: 100%;
+	}
+	#brand .links li {
+		width: 48%;
+	}
+	@media only screen and (max-width: 1160px){
+		#brand .links {
+			display: block;
+		}
+		#brand .links li {
+			width: 100%;
+			max-width: 205px;
+			margin: 0 auto 15px;
+		}
+	}
+}
+#brand .links li a {
+	width: 100%;
+	box-sizing: border-box;
+	padding-left: 70px;
+	line-height: 80px;
+	display: block;
+	background: url("../img/brand/insta.png") no-repeat left 20px center /30px auto, #fff url("../img/brand/arrow.png") no-repeat right 20px center;
+}
+#brand .links li:nth-of-type(2) a {
+	background: url("../img/brand/web.png") no-repeat left 20px center /30px auto, #fff url("../img/brand/arrow.png") no-repeat right 20px center;
+}
+/*--------------------------------------------------
+	お問い合せ
+--------------------------------------------------*/
+#mailform .tbl {
+	margin: 20px 0;
+}
+#mailform .tbl th {
+	vertical-align: top;
+}
+#mailform .tbl th .need {
+	float: right;
+	padding: 1px 10px;
+	background: #000;
+	border-radius: 5px;
+	color: #FFFFFF;
+	font-size: 13px;
+}
+#mailform .btn input {
+	width: 200px;
+	height: 50px;
+	background: #000;
+	border: 1px solid #686868;
+	border-radius: 30px;
+	box-shadow: 0 -2px 0 rgba(0,0,0,0.2) inset;
+	color: #FFFFFF;
+	font-size: 16px;
+	font-family: "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	cursor: pointer;
+}
+#mailform .btn input+input {
+	background: #F4F4F4;
+	border-color: #DDDDDD;
+	color: #666666;
+}
+#mailform .tbl input[type="text"], #mailform .tbl textarea {
+	width: 100%;
+	box-sizing: border-box;
+}
+#mailform .tbl textarea {
+	display: block;
+}
+#mailform .tbl input.wno {
+	width: 100px;
+}
+#mailform .tbl th {
+	width: 160px;
+}
+@media only screen and (max-width: 1300px) {
+	#mailform .tbl {
+		border-bottom: 1px solid #BBBBBB;
+	}
+	#mailform .tbl th {
+		width: auto;
+	}
+	#mailform .tbl th,
+	#mailform .tbl td {
+		display: block;
+		border-bottom: none;
+	}
+}

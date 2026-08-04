@@ -1,0 +1,70 @@
+@charset "utf-8";
+/*==================================================
+	スマホのみに適用
+==================================================*/
+@media only screen and (max-width: 640px){
+	body { font-size: 85%; }
+	.dsp_hp, .dsp_hpt { display: none; }
+
+	/* ヘッダ */
+	#page-sub #header {
+		background: linear-gradient(to bottom, #fff 50%, transparent);
+	}
+	/* コンテナ */
+	.main {
+		padding: 100px 40px 40px;
+	}
+	/* 枠のマージン・パディング */
+	.mb { margin-bottom: 30px; }
+	.pt { padding-top: 30px; }
+	.pb { padding-bottom: 30px; }
+	
+	/* パンくずリスト */
+	#page_navi {
+		top: 55px;
+	}
+	
+	/* 共通 */
+	#page-sub #container-img {
+		height: 260px;
+		margin-bottom: 80px;
+	}
+	
+	/* footer */
+	#footer {
+		background: #fff;
+		padding: 5px 0;
+		bottom: 0;
+		font-size: 10px;
+	}
+	
+	/*--------------------------------------------------
+		トップページ
+	--------------------------------------------------*/
+
+	/*--------------------------------------------------
+		brand
+	--------------------------------------------------*/
+	#brand .logo {
+		margin-bottom: 30px;
+	}
+	#brand .txt01 {
+		margin-bottom: 20px;
+	}
+	#brand .txt02 {
+		line-height: 2;
+		margin-bottom: 30px;
+	}
+	#brand .links li a {
+		border: 1px solid;
+	}
+
+	/*--------------------------------------------------
+		サブページ
+	--------------------------------------------------*/
+	
+/*--------------------------------------------------
+	お問い合せ
+--------------------------------------------------*/
+/*------------------------------------------------*/
+}

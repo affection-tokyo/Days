@@ -1,0 +1,123 @@
+@charset "utf-8";
+/*==================================================
+スマホ時のメニュー（ハンバーガーメニュー）
+==================================================*/
+#menuOverlay {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	position: fixed;
+	z-index: 9997;
+}
+#switchBtnArea {
+	width: 100%;
+	position: relative;
+}
+/**/
+#switchBtnArea #switchBtn {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	display: block;
+	width: 35px;
+	height: 15px;
+	z-index: 9999;
+}
+#switchBtnArea #switchBtn span {
+	right: 0;
+	width: 35px;
+	height: 1px;
+	display: block;
+	position: absolute;
+	background-color: #666;
+	transition: all 0.2s linear;
+}
+#switchBtnArea #switchBtn span:nth-of-type(1) {
+	top: 0;
+	-webkit-transform: rotate(0);
+	transform: rotate(0);
+}
+#switchBtnArea #switchBtn span:nth-of-type(2) {
+	top: 7px;
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+#switchBtnArea #switchBtn span:nth-of-type(3) {
+	bottom: 0;
+	-webkit-transform: rotate(0);
+	transform: rotate(0);
+}
+/**/
+#switchBtnArea #switchBtn.btnClose {
+	/*background: transparent;*/
+}
+#switchBtnArea #switchBtn.btnClose span:nth-of-type(1) {
+	top: 7px;
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+#switchBtnArea #switchBtn.btnClose span:nth-of-type(2) {
+	-webkit-transform: scale(0);
+	transform: scale(0);
+}
+#switchBtnArea #switchBtn.btnClose span:nth-of-type(3) {
+	bottom: 7px;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+/**/
+#menu {
+	position: fixed;
+	top: 0;
+	right: -450px;
+	overflow: auto;
+	width: 450px;
+	height: 100%;
+	padding: 75px;
+	background: rgba(255,255,255,0.8);
+	box-sizing: border-box;
+	text-align: left;
+	z-index: 9998;
+	/* フレックス */
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+#menu ul {
+	width: 100%;
+	margin-bottom: 100px;
+	padding-bottom: 100px;
+	border-bottom: 1px solid #ccc;
+}
+#menu ul li+li {
+	margin-top: 30px;
+}
+#menu ul li a {
+	display: inline-block;
+	color: #333;
+	font-weight: 500;
+	font-family: "Quicksand", sans-serif;
+}
+@media only screen and (max-width: 768px) {
+	#menu {
+		right: -300px;
+		width: 300px;
+		padding: 50px;
+	}
+}
+@media only screen and (max-width: 640px){ /* スマホ用 */
+	#menu {
+		right: -100%;
+		width: 100%;
+		padding: 35px;
+	}
+	#menu ul {
+		margin-bottom: 60px;
+		padding-bottom: 60px;
+	}
+	#menu ul li+li {
+		margin-top: 30px;
+	}
+}

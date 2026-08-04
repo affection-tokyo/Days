@@ -1,0 +1,94 @@
+@charset "utf-8";
+/*==================================================
+	タブレットのみ適応
+==================================================*/
+@media only screen and (max-width: 820px) and (min-width: 641px){
+	.dsp_smt { display: none; }
+}
+/*==================================================
+	タブレット・スマホに適応
+==================================================*/
+@media only screen and (max-width: 820px) {
+	.dsp_hp { display: none; }
+
+	/* コンテナ */
+	.main {
+		padding: 80px 60px;
+	}
+	/* パンくずリスト */
+	#page_navi {
+		margin-bottom: 20px;
+		padding-top: 15px;
+		font-size: 11px;
+		left: 15px;
+	}
+	/* 枠のマージン・パディング */
+	.mb { margin-bottom: 40px; }
+	.pt { padding-top: 40px; }
+	.pb { padding-bottom: 40px; }
+	/* アンカーリンク用上部スペース */
+	.pad_anchor {
+		margin-top: -50px;
+		padding-top: 50px;
+	}
+	
+	/* タイトル */
+	#header h1.title img {
+		width: 180px;
+	}
+	#page-top #header h1.title img {
+		/* 画像を白くする */
+		-webkit-filter: brightness(0) invert(1);
+		filter: brightness(0) invert(1);
+	}
+	#page-top #header h1.title {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+	}
+	
+	/* footer */
+	
+	#copyright {
+		font-size: 9px;
+	}
+	
+	/* 共通 */	
+	#container-img img {
+		object-fit: contain;
+	}
+	
+	/*--------------------------------------------------
+		トップページ
+	--------------------------------------------------*/
+	
+	/*--------------------------------------------------
+		サブページ
+	--------------------------------------------------*/
+
+	/*--------------------------------------------------
+		サブページ
+	--------------------------------------------------*/
+	
+	/*--------------------------------------------------
+		お問い合せ
+	--------------------------------------------------*/
+	#mailform .tbl {
+		border-bottom: 1px solid #BBB;
+	}
+	#mailform .tbl th,
+	#mailform .tbl td {
+		display: block;
+		width: auto;
+		border-bottom: none;
+	}
+	#mailform .tbl input[type="text"],
+	#mailform .tbl textarea {
+		font-size: 120%;
+	}
+	#mailform .btn input {
+		width: 120px;
+	}
+
+/*------------------------------------------------*/
+}
