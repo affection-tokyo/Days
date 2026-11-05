@@ -1,103 +1,267 @@
 'use strict';
-// Static, GitHub Pages compatible. GA4 tracking is initialized in document head.
+
+/**
+ * DAYS official website — shared JavaScript
+ *
+ * 1. Mobile navigation
+ * 2. Scroll reveal and year display
+ * 3. Photo lightbox
+ * 4. ODM/OEM and rental-space inquiry form
+ *
+ * No framework or build tools required. This file works on GitHub Pages.
+ */
+
 document.documentElement.classList.add('js');
-(() => {
-  const btn = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('.mobile-nav');
-  if (btn && nav) {
-    const toggle = (open) => {
-      document.body.classList.toggle('menu-open', open);
-      btn.setAttribute('aria-expanded', String(open));
-      btn.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
-      nav.inert = !open;
-    };
-    btn.addEventListener('click', () => toggle(btn.getAttribute('aria-expanded') !== 'true'));
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 880) toggle(false); });
+
+// -----------------------------------------------------------------------------
+// 1. MOBILE NAVIGATION
+// -----------------------------------------------------------------------------
+(function initMobileNavigation() {
+  const menuButton = document.querySelector('.menu-toggle');
+  const navigation = document.querySelector('.mobile-nav');
+
+  if (!menuButton || !navigation) return;
+
+  function setMenuOpen(isOpen) {
+    document.body.classList.toggle('menu-open', isOpen);
+    menuButton.setAttribute('aria-expanded', String(isOpen));
+    menuButton.setAttribute(
+      'aria-label',
+      isOpen ? 'メニューを閉じる' : 'メニューを開く'
+    );
+    navigation.inert = !isOpen;
   }
-  // Editorial reveal, gracefully skipped for users who prefer reduced motion.
-  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const io = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
-    }), {threshold:.09,rootMargin:'0px 0px -30px 0px'});
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  } else {document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));}
-  document.querySelectorAll('.current-year').forEach(el => el.textContent = String(new Date().getFullYear()));
-  // Image viewer: all images are locally supplied and optimized for this site.
-  const modal=document.getElementById('lightbox');
-  if(modal){
-    const target=modal.querySelector('img'),counter=modal.querySelector('.lightbox-counter');
-    let items=[],index=0,previousFocus=null;
-    const show=(i) => {
-      index=(i+items.length)%items.length;
-      target.src=items[index].dataset.src;
-      target.alt=items[index].dataset.alt || '';
-      counter.textContent=String(index+1).padStart(2,'0')+' / '+String(items.length).padStart(2,'0');
-    };
-    const close=()=>{
-      if(modal.hidden)return;
-      modal.hidden=true;document.body.style.overflow='';target.removeAttribute('src');
-      if(previousFocus) previousFocus.focus();
-    };
-    document.querySelectorAll('[data-gallery]').forEach(item=>item.addEventListener('click',()=>{
-      items=Array.from(document.querySelectorAll(`[data-gallery="${item.dataset.gallery}"]`));
-      previousFocus=document.activeElement;
-      show(items.indexOf(item));
-      modal.hidden=false;
-      document.body.style.overflow='hidden';
-      modal.querySelector('.lightbox-close').focus();
-    }));
-    modal.querySelector('.lightbox-close').addEventListener('click',close);
-    modal.querySelector('.lightbox-prev').addEventListener('click',()=>show(index-1));
-    modal.querySelector('.lightbox-next').addEventListener('click',()=>show(index+1));
-    modal.addEventListener('click',e=>{if(e.target===modal)close();});
-    document.addEventListener('keydown',e=>{
-      if(modal.hidden)return;
-      if(e.key==='Escape')close();
-      if(e.key==='ArrowLeft')show(index-1);
-      if(e.key==='ArrowRight')show(index+1);
-      if(e.key==='Tab'){
-        const focusable=Array.from(modal.querySelectorAll('button'));
-        const first=focusable[0],last=focusable[focusable.length-1];
-        if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
-        if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
-      }
-    });
-  }
+
+  menuButton.addEventListener('click', () => {
+    setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
+  });
+
+  navigation.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setMenuOpen(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setMenuOpen(false);
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 880) setMenuOpen(false);
+  });
 })();
 
+// -----------------------------------------------------------------------------
+// 2. SMALL VISUAL EFFECTS
+// -----------------------------------------------------------------------------
+(function initScrollEffects() {
+  const elements = document.querySelectorAll('.reveal');
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
 
-// Existing DAYS inquiry flow, migrated from the previous homepage.
-// Verify actual delivery to the authorized inbox after deploying.
-(() => {
-  const form=document.getElementById('contactForm');
+  if (!('IntersectionObserver' in window) || prefersReducedMotion) {
+    elements.forEach((element) => element.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.09,
+    rootMargin: '0px 0px -30px 0px'
+  });
+
+  elements.forEach((element) => observer.observe(element));
+})();
+
+document.querySelectorAll('.current-year').forEach((element) => {
+  element.textContent = String(new Date().getFullYear());
+});
+
+// -----------------------------------------------------------------------------
+// 3. RENTAL / SCARPETTA PHOTO GALLERY
+// -----------------------------------------------------------------------------
+(function initLightbox() {
+  const dialog = document.getElementById('lightbox');
+  if (!dialog) return;
+
+  const image = dialog.querySelector('img');
+  const counter = dialog.querySelector('.lightbox-counter');
+  const closeButton = dialog.querySelector('.lightbox-close');
+  const previousButton = dialog.querySelector('.lightbox-prev');
+  const nextButton = dialog.querySelector('.lightbox-next');
+
+  let galleryItems = [];
+  let currentIndex = 0;
+  let previouslyFocused = null;
+
+  function displayImage(index) {
+    currentIndex = (index + galleryItems.length) % galleryItems.length;
+    const item = galleryItems[currentIndex];
+
+    image.src = item.dataset.src;
+    image.alt = item.dataset.alt || '';
+    counter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(galleryItems.length).padStart(2, '0')}`;
+  }
+
+  function openGallery(selectedItem) {
+    const galleryId = selectedItem.dataset.gallery;
+    galleryItems = Array.from(document.querySelectorAll('[data-gallery]'))
+      .filter((item) => item.dataset.gallery === galleryId);
+
+    if (!galleryItems.length) return;
+
+    previouslyFocused = document.activeElement;
+    displayImage(galleryItems.indexOf(selectedItem));
+    dialog.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeButton.focus();
+  }
+
+  function closeGallery() {
+    if (dialog.hidden) return;
+    dialog.hidden = true;
+    document.body.style.overflow = '';
+    image.removeAttribute('src');
+    if (previouslyFocused) previouslyFocused.focus();
+  }
+
+  document.querySelectorAll('[data-gallery]').forEach((item) => {
+    item.addEventListener('click', () => openGallery(item));
+  });
+
+  closeButton.addEventListener('click', closeGallery);
+  previousButton.addEventListener('click', () => displayImage(currentIndex - 1));
+  nextButton.addEventListener('click', () => displayImage(currentIndex + 1));
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) closeGallery();
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (dialog.hidden) return;
+
+    if (event.key === 'Escape') closeGallery();
+    if (event.key === 'ArrowLeft') displayImage(currentIndex - 1);
+    if (event.key === 'ArrowRight') displayImage(currentIndex + 1);
+
+    // Keep keyboard focus inside the open image dialog.
+    if (event.key === 'Tab') {
+      const buttons = [closeButton, previousButton, nextButton];
+      if (event.shiftKey && document.activeElement === buttons[0]) {
+        event.preventDefault();
+        buttons[buttons.length - 1].focus();
+      } else if (!event.shiftKey && document.activeElement === buttons[buttons.length - 1]) {
+        event.preventDefault();
+        buttons[0].focus();
+      }
+    }
+  });
+})();
+
+// -----------------------------------------------------------------------------
+// 4. INQUIRY FORM — ODM/OEM + RENTAL SPACE
+// -----------------------------------------------------------------------------
+(function initContactForm() {
+  const form = document.getElementById('contactForm');
   if (!form) return;
-  const btn=document.getElementById('submitBtn');
-  const status=document.getElementById('inquiry-feedback');
-  const GAS_URL='https://script.google.com/macros/s/AKfycbzFj8AtuJKo5u8f3at5CemGUdp6-1RD-b7n9FCjeIm4bmPXmuFiBCt3z5m8j4sRmQgwfA/exec';
-  form.addEventListener('submit',async (event) => {
+
+  const category = document.getElementById('inquiry-type');
+  const rentalDateRow = document.getElementById('rental-date-row');
+  const submitButton = document.getElementById('submitBtn');
+  const feedback = document.getElementById('inquiry-feedback');
+
+  /**
+   * This is the pre-existing DAYS Google Apps Script web app URL.
+   * IMPORTANT: The recipient's email address is configured in Apps Script,
+   * NOT in this website's HTML/JS. Please check the account and do an end-to-end
+   * delivery test before accepting real inquiries.
+   *
+   * A standalone GitHub Pages site cannot send email by itself.
+   */
+  const FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbx_lr73FTrLOPkwvwB4dFfGmsDIRZ0Aq04xXOjQoGlxp9gvCAE-kRr9sXrSDCMWn2_F/exec';
+
+  // Choose the category automatically when arriving from an inquiry link.
+  const preselectedType = new URLSearchParams(window.location.search).get('type');
+  if (preselectedType === 'odm') category.value = 'ODM・OEM';
+  if (preselectedType === 'rental') category.value = 'レンタルスペース';
+
+  function updateCategoryFields() {
+    rentalDateRow.hidden = category.value !== 'レンタルスペース';
+  }
+
+  category.addEventListener('change', updateCategoryFields);
+  updateCategoryFields();
+
+  function setFeedback(message, state) {
+    feedback.textContent = message;
+    feedback.dataset.state = state;
+  }
+
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
-    btn.disabled=true;
-    btn.textContent='SENDING...';
-    status.textContent='送信中です。';
-    status.dataset.state='pending';
+
+    const rawMessage = document.getElementById('inquiry-message').value.trim();
+    const companyName = document.getElementById('inquiry-company').value.trim();
+    const preferredDate = document.getElementById('inquiry-date').value.trim();
+    const phone = document.getElementById('inquiry-tel').value.trim();
+
+    // Preserve the field names (name / email / message) required by the old GAS.
+    // Include the new fields inside "message" so an older GAS implementation
+    // can still pass these details along without changing its parameter names.
+    const payload = new FormData(form);
+    payload.set('message', [
+      `【お問い合わせ種別】${category.value}`,
+      companyName ? `【会社名・ブランド名】${companyName}` : '',
+      phone ? `【電話番号】${phone}` : '',
+      preferredDate && category.value === 'レンタルスペース'
+        ? `【ご希望の日程】${preferredDate}` : '',
+      '',
+      '【お問い合わせ内容】',
+      rawMessage
+    ].filter((line) => line !== null).join('\n'));
+
+    submitButton.disabled = true;
+    submitButton.textContent = '送信中…';
+    setFeedback('送信処理中です。', 'pending');
+
     try {
-      const response=await fetch(GAS_URL,{method:'POST',body:new FormData(form),redirect:'follow'});
-      if (!response.ok) throw new Error('HTTP '+response.status);
-      const data=await response.json();
-      if (data && (data.success === false || data.status === 'error' || data.result === 'error')) throw new Error('GAS returned error');
+      const response = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        body: payload,
+        redirect: 'follow'
+      });
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      // An existing GAS may use "success", "result", or "status" in JSON.
+      // Require a positive acknowledgement rather than assuming HTTP 200 = sent.
+      const result = await response.json();
+      const accepted = result && (
+        result.success === true ||
+        result.result === 'success' ||
+        result.status === 'success'
+      );
+
+      if (!accepted) throw new Error('No positive confirmation from GAS');
+
       form.reset();
-      status.textContent='お問い合わせを受け付けました。ご連絡ありがとうございます。';
-      status.dataset.state='success';
-    } catch (err) {
-      status.textContent='送信できませんでした。お手数ですが、お電話でお問い合わせください。';
-      status.dataset.state='error';
-      console.error('Inquiry send failed:',err);
+      updateCategoryFields();
+      setFeedback('送信を受け付けました。お問い合わせありがとうございます。', 'success');
+    } catch (error) {
+      // Some GAS deployments accept a POST but block browsers from reading
+      // the cross-origin response. Don't claim a confirmed delivery in that case.
+      setFeedback(
+        '送信完了を確認できませんでした。重複送信を避けるため、再送する前に少し時間をおいてご確認ください。',
+        'error'
+      );
+      console.error('DAYS contact form: delivery could not be confirmed', error);
     } finally {
-      btn.disabled=false;
-      btn.innerHTML='SEND MESSAGE <span aria-hidden="true">↗</span>';
+      submitButton.disabled = false;
+      submitButton.innerHTML = '送信する <span aria-hidden="true">↗</span>';
     }
   });
 })();
