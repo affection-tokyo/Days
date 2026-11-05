@@ -1,0 +1,14 @@
+# Mac・Windowsの自動生成ファイル
+.DS_Store
+Thumbs.db
+
+# ドメイン・会社の機密資料
+*ドメイン移管情報*
+*Whois*
+*.xlsx
+
+# 旧HPのバックアップ
+/days-co-ltd.net_HTMLデータ一式/
+
+# ローカル管理資料
+/README_公開手順.md

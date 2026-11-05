@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://www.days-co-ltd.net/sitemap.xml
